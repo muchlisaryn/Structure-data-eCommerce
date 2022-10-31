@@ -6,11 +6,113 @@ const id = parseInt(queries[1]);
 const product = document.querySelector(".product-details");
 product.innerHTML = showProduct(id);
 
+const productPicZoom = document.querySelector(".product-pic-zoom");
+productPicZoom.innerHTML = showProductPicZoom(id);
+
+function showProductPicZoom(id) {
+  return `
+  <img
+    class="product-big-img"
+    src=${getItemById(id).img}
+    alt=""
+  />
+  <div class="zoom-icon">
+    <i class="fa fa-search-plus"></i>
+  </div>`;
+}
+
+const productContent = document.querySelector(".product-content");
+productContent.innerHTML = showProductContent(id);
+
+function showProductContent(id) {
+  return `
+    <div class="row">
+      <div class="col-lg-7">
+        <h5>Introduction</h5>
+        <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing
+        elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip
+        ex ea commodo consequat. Duis aute irure dolor in
+      </p>                  
+      <h5>Features</h5>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing
+        elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip
+        ex ea commodo consequat. Duis aute irure dolor in
+      </p>
+    </div>
+    <div class="col-lg-5">
+      <img src=${getItemById(id).img} alt="" />
+    </div>                   
+    </div>
+                        `;
+}
+
+const productRecommendation = document.querySelector("#product-recommendation");
+productRecommendation.innerHTML = showProductRecommendation(id);
+
+function showProductRecommendation(id) {
+  let recommendationHtml = "";
+  recommendationHtml[id].map(function (item) {
+    recommendationHtml += showRecomendationProduct(item);
+    return item;
+  });
+
+  return recommendationHtml;
+
+  function showRecomendationProduct(item) {
+    return ` 
+  <div class="col-lg-3 col-sm-6">
+  <div class="product-item">
+    <div class="pi-pic">
+      <img src=${item.img} alt="" />
+      <div class="sale">Sale</div>
+      <div class="icon">
+        <i class="icon_heart_alt"></i>
+      </div>
+      <ul>
+        <li class="w-icon active">
+          <a href="#"><i class="icon_bag_alt"></i></a>
+        </li>
+        <li class="quick-view"><a href="#">+ Quick View</a></li>
+        <li class="w-icon">
+          <a href="#"><i class="fa fa-random"></i></a>
+        </li>
+      </ul>
+    </div>
+    <div class="pi-text">
+      <div class="catagory-name">Geek Stuff</div>
+      <a href="#">
+        <h5>${item.title}</h5>
+      </a>
+      <div class="product-price">
+        ${item.price}
+        <span>${item.price * 10}</span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+  }
+}
+
+function getItemById(id) {
+  return allItems.find(function (item) {
+    console.log(item.id, id);
+    return item.id === id;
+  });
+}
 function showProduct(id) {
+  const item = getItemById(id);
+  console.log(item);
   return `
                   <div class="pd-title">
-                    <span>oranges</span>
-                    <h3>Pure Pineapple</h3>
+                    <span>geek stuff</span>
+                    <h3>${item.title}</h3>
                     <a href="#" class="heart-icon"
                       ><i class="icon_heart_alt"></i
                     ></a>
@@ -29,7 +131,7 @@ function showProduct(id) {
                       eiusmod tempor sum dolor sit amet, consectetur adipisicing
                       elit, sed do mod tempor
                     </p>
-                    <h4>$495.00 <span>629.99</span></h4>
+                    <h4>$ ${item.price}<span>${item.price * 9}</span></h4>
                   </div>
                   <div class="pd-color">
                     <h6>Color</h6>
